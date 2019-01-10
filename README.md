@@ -31,13 +31,13 @@ Starts a `type/name` branch, usually a feature or hotfix, and starts from the co
 
 ```shell
 # start a hotfix (off of master by default)
-$ git start hotfix FAD-1234
+$ git start hotfix NODE-1234
 
 # start a feature (off of develop by default)
-$ git start feature FAD-1234
+$ git start feature NODE-1234
 
 # start whateveryouwant off of a specified branch
-$ git start whatever FAD-1234 master
+$ git start whatever NODE-1234 master
 ```
 
 #### git finish
@@ -48,16 +48,16 @@ branch by merging to master by default.
 Specify "push" as the last argument to auto-push merged branch(es).
 
 ```shell
-# Merge hotfix/FAD-1234 to master and develop
+# Merge hotfix/NODE-1234 to master and develop
 $ git finish
 
-# Merge feature/FAD-1234 to develop only
+# Merge feature/NODE-1234 to develop only
 $ git finish
 
 # Merge feature or hotfix and push merged branch(es) to origin
 $ git finish push
 
-# Merge whatever/FAD-1234 to master and develop (specify type is hotfix)
+# Merge whatever/NODE-1234 to master and develop (specify type is hotfix)
 $ git finish hotfix
 
 # Merge other branch and push merged branch(es) to origin
