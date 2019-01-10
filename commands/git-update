@@ -3,7 +3,7 @@
 ##
 # Usage
 #
-# Updates current branch:
+# Updates current branch based on its name:
 # $ git update
 #
 # Updates with rebase rather than merge
@@ -11,6 +11,7 @@
 ##
 
 git fetch > /dev/null 2>&1
+DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop' | wc -l)
 
 # exit on error
 set -e
@@ -26,9 +27,17 @@ fi
 
 git fetch  # get new stuff
 
-if [[ $TYPE = 'rebase' ]]; then
-  git rebase origin/master
+if [[ ${BRANCH:0:8} = "feature/" || $DEVELOP_EXISTS -eq 1 ]]; then
+ if [[ $TYPE = 'rebase' ]]; then
+    git rebase origin/develop
+  else
+    git merge origin/develop
+  fi
 else
-  git merge origin/master
+  if [[ $TYPE = 'rebase' ]]; then
+    git rebase origin/master
+  else
+    git merge origin/master
+  fi
 fi
 
