@@ -11,7 +11,7 @@
 ##
 
 git fetch > /dev/null 2>&1
-DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop' | wc -l)
+DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop$' | wc -l)
 
 # exit on error
 set -e
