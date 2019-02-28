@@ -29,6 +29,8 @@ Sort of like "flow <type> start <name>", but slightly different just to be confu
 
 Starts a `type/name` branch, usually a feature or hotfix, and starts from the correct starting branch for you.
 
+**Note**: Relevant to Contrast Security peeps, if you just do `git start 1234-short-desc` it will prepend `CONTRAST-` to the branch name
+
 ```shell
 # start a hotfix (off of master by default)
 $ git start hotfix NODE-1234
