@@ -6,11 +6,11 @@
 # Finish current branch based on its name:
 # $ git finish
 #
-# Finish current branch with hotfix strategy
-# $ git finish hotfix
+# Finish current branch to a diff parent
+# $ git finish release/1.x
 #
 # Finish current branch and also push merged branch(es) to origin
-# $ git finish [hotfix] push
+# $ git finish [release/1.x] push
 #
 ##
 
@@ -21,26 +21,42 @@ DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop$' | wc -l)
 set -e
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-TYPE=$1
+PARENT=$1
 
 if [[ $BRANCH = 'master' || $BRANCH = 'develop' ]]; then
   echo "ugh don't finish $BRANCH"
   exit 255
 fi
 
-if [[ $TYPE = 'hotfix' || ${BRANCH:0:7} = "hotfix/" || $DEVELOP_EXISTS -eq 0 ]]; then
+echo "name of $PARENT"
+# Merge the branch into a diff parent
+if [[ $PARENT != 'push' ]]; then
+  echo "name of branch $BRANCH"
+  git checkout $PARENT
+  git pull origin $PARENT
+  git merge --no-ff $BRANCH
+  [[ $2 = 'push' ]] && git push origin $PARENT
+  git del-branch $BRANCH
+  exit 0
+fi
+
+# if branch matches hotfix/ and there is no develop branch, merge to master
+if [[ ${BRANCH:0:7} = "hotfix/" || $DEVELOP_EXISTS -eq 0 ]]; then
   git checkout master
   git pull origin master
   git merge --no-ff $BRANCH
   [[ $1 = 'push' || $2 = 'push' ]] && git push origin master
+  git del-branch $BRANCH
+  exit 0
 fi
 
+# develop exits, merge there
 if [[ $DEVELOP_EXISTS -eq 1 ]]; then
   git checkout develop
   git pull origin develop
   git merge --no-ff $BRANCH
   [[ $1 = 'push' || $2 = 'push' ]] && git push origin develop
+  git del-branch $BRANCH
+  exit 0
 fi
 
-git branch -d $BRANCH                   # deletes local branch
-git push origin :$BRANCH 2> /dev/null   # deletes remote branch

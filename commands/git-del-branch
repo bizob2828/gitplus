@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+##
+# Usage
+#
+# Delete both local and remote branch
+# $ git del-branch name-of-branch
+#
+# Delete both local with force and remote branch
+# $ git del-branch name-of-branch --force
+#
+##
+[[ $2 = '--force' ]] && DELETE_METHOD="-D" || DELETE_METHOD="-d"
+git fetch > /dev/null 2>&1
+git branch $DELETE_METHOD $1                   # deletes local branch
+git push origin :$1 2> /dev/null   # deletes remote branch
