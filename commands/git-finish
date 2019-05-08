@@ -46,8 +46,6 @@ if [[ ${BRANCH:0:7} = "hotfix/" || $DEVELOP_EXISTS -eq 0 ]]; then
   git pull origin master
   git merge --no-ff $BRANCH
   [[ $1 = 'push' || $2 = 'push' ]] && git push origin master
-  git del-branch $BRANCH
-  exit 0
 fi
 
 # develop exits, merge there
@@ -56,7 +54,6 @@ if [[ $DEVELOP_EXISTS -eq 1 ]]; then
   git pull origin develop
   git merge --no-ff $BRANCH
   [[ $1 = 'push' || $2 = 'push' ]] && git push origin develop
-  git del-branch $BRANCH
-  exit 0
 fi
 
+git del-branch $BRANCH
