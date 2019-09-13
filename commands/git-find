@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BRANCH=`git branch | grep -i $1`
+git checkout $BRANCH
+
