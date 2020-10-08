@@ -15,7 +15,9 @@
 ##
 
 git fetch > /dev/null 2>&1
-DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop$' | wc -l)
+
+source default-branch.sh
+source develop-exists.sh
 
 # exit on error
 set -e
@@ -23,7 +25,7 @@ set -e
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 PARENT=$1
 
-if [[ $BRANCH = 'master' || $BRANCH = 'develop' ]]; then
+if [[ $BRANCH = $MAIN || $BRANCH = 'develop' ]]; then
   echo "ugh don't finish $BRANCH"
   exit 255
 fi
@@ -40,12 +42,12 @@ if [[ $PARENT != 'push' ]]; then
   exit 0
 fi
 
-# if branch matches hotfix/ and there is no develop branch, merge to master
+# if branch matches hotfix/ and there is no develop branch, merge to main
 if [[ ${BRANCH:0:7} = "hotfix/" || $DEVELOP_EXISTS -eq 0 ]]; then
-  git checkout master
-  git pull origin master
+  git checkout $MAIN
+  git pull origin $MAIN
   git merge --no-ff $BRANCH
-  [[ $1 = 'push' || $2 = 'push' ]] && git push origin master
+  [[ $1 = 'push' || $2 = 'push' ]] && git push origin $MAIN
 fi
 
 # develop exits, merge there

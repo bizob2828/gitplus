@@ -19,7 +19,7 @@ Once added, you'll probably need to source your profile file or start a new term
 
 #### git plus
 
-Run **git plus upgrade** to easily pull the latest of this repo's origin/master branch to your machine.
+Run **git plus upgrade** to easily pull the latest of this repo's origin/main branch to your machine.
 
 **git plus help** will cat the contents of this README
 
@@ -32,25 +32,25 @@ Starts a `type/name` branch, usually a feature or hotfix, and starts from the co
 **Note**: Relevant to Contrast Security peeps, if you just do `git start feature 1234-short-desc` it will prepend `CONTRAST-` to the branch name
 
 ```shell
-# start a hotfix (off of master by default)
+# start a hotfix (off of default branch)
 $ git start hotfix NODE-1234
 
 # start a feature (off of develop by default)
 $ git start feature NODE-1234
 
 # start whateveryouwant off of a specified branch
-$ git start whatever NODE-1234 master
+$ git start whatever NODE-1234 main
 ```
 
 #### git finish
 
-Does a --no-ff merge to master (if hotfix) and develop. Will also work in repos that don't have a develop
-branch by merging to master by default.
+Does a --no-ff merge to main (if hotfix) and develop. Will also work in repos that don't have a develop
+branch by merging to default branch.
 
 Specify "push" as the last argument to auto-push merged branch(es).
 
 ```shell
-# Merge hotfix/NODE-1234 to master and develop
+# Merge hotfix/NODE-1234 to main and develop
 $ git finish
 
 # Merge feature/NODE-1234 to develop only
@@ -59,7 +59,7 @@ $ git finish
 # Merge feature or hotfix and push merged branch(es) to origin
 $ git finish push
 
-# Merge whatever/NODE-1234 to master and develop (specify type is hotfix)
+# Merge whatever/NODE-1234 to main and develop (specify type is hotfix)
 $ git finish hotfix
 
 # Merge other branch and push merged branch(es) to origin
@@ -68,29 +68,29 @@ $ git finish hotfix push
 
 #### git promote
 
-Merges develop into master locally, using a --no-ff merge to create an explicit merge commit.
+Merges develop into main locally, using a --no-ff merge to create an explicit merge commit.
 
-Specify "push" as the last argument to auto-push master after merge.
+Specify "push" as the last argument to auto-push main after merge.
 
 ```shell
-# Merge develop to master
+# Merge develop to main
 $ git promote
 
-# Also push master to origin
+# Also push main to origin
 $ git promote push
 ```
 
 #### git update
 
-Merges master or develop into your current branch depending on your branch type and if there is a develop branch available.  It will also merge master into develop if on the develop branch.
+Merges main or develop into your current branch depending on your branch type and if there is a develop branch available.  It will also merge main into develop if on the develop branch.
 
 Specify "rebase" to rebase the changes rather than merge them.
 
 ```shell
-# Merge develop or master into your branch
+# Merge develop or main into your branch
 $ git update
 
-# Rebase develop or master into your branch
+# Rebase develop or main into your branch
 $ git update rebase
 ```
 
@@ -110,10 +110,29 @@ List commits on your current branch locally that are not in the `origin` remote.
 $ git out
 ```
 
-#### git heads
-
-lol nah jk
-
 #### git open
 
 Opens the current GitHub repo in your browser. No auth required because the browser does auth for you.
+
+```shell
+$ git open
+```
+
+#### git del-branch
+Deletes a branch both locally and at remote
+
+```shell
+$ git del-branch branch-name
+
+# If branch has not been pushed or not merged you will have to --force
+$ git del-branch branch-name --force
+```
+
+#### git find
+Checks out a branch based on a substring
+
+```shell
+# this would check out a branch that starts with `br`
+$ git find br
+```
+

@@ -3,26 +3,27 @@
 ##
 # Usage
 #
-# Start a hotfix/NODE-1234 branch (off master by default)
+# Start a hotfix/NODE-1234 branch (off main by default)
 # $ git start hotfix NODE-1234
 #
 # Start a feature/NODE-1234 branch (off develop by default)
 # $ git start feature NODE-1234
 #
-# Start a whatever/NODE-1234 branch off master, as specified
-# $ git start whatever NODE-1234 master
+# Start a whatever/NODE-1234 branch off main as specified
+# $ git start whatever NODE-1234 main
 #
 ##
 
 # exit on error
 set -e
+source default-branch.sh
 
 if [[ $1 = '' || $2 = '' ]]; then
   echo "Please specify a type (e.g. hotfix) and name (e.g. NODE-1234)"
   exit 255
 fi
 
-[[ $1 = 'hotfix' ]] && BRANCH='master' || BRANCH='develop'
+[[ $1 = 'hotfix' ]] && BRANCH=$MAIN || BRANCH='develop'
 [[ $3 != '' ]] && BRANCH=$3
 
 git checkout $BRANCH

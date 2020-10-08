@@ -3,14 +3,14 @@
 ##
 # Usage
 #
-# Pull from develop and master, then merge develop to master with a merge commit
+# Pull from develop and main, then merge develop to main with a merge commit
 # $ git promote
 #
-# Promote develop and then push master to origin
+# Promote develop and then push main to origin
 # $ git promote push
 #
 ##
-
+source default-branch.sh
 git fetch > /dev/null 2>&1
 DEVELOP_EXISTS=$(git ls-remote | grep '/heads/develop$' | wc -l)
 
@@ -20,10 +20,10 @@ set -e
 if [[ $DEVELOP_EXISTS -eq 1 ]]; then
   git checkout develop
   git pull origin develop
-  git checkout master
-  git pull origin master
+  git checkout $MAIN
+  git pull origin $MAIN
   git merge --no-ff develop
-  [[ $1 = 'push' ]] && git push origin master
+  [[ $1 = 'push' ]] && git push origin $MAIN
 else
-  echo "No develop branch, can't promote develop to master"
+  echo "No develop branch, can't promote develop to $MAIN"
 fi
