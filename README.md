@@ -29,17 +29,15 @@ Sort of like "flow <type> start <name>", but slightly different just to be confu
 
 Starts a `type/name` branch, usually a feature or hotfix, and starts from the correct starting branch for you.
 
-**Note**: Relevant to Contrast Security peeps, if you just do `git start feature 1234-short-desc` it will prepend `CONTRAST-` to the branch name
-
 ```shell
 # start a hotfix (off of default branch)
-$ git start hotfix NODE-1234
+$ git start hotfix 1234-desc
 
 # start a feature (off of develop by default)
-$ git start feature NODE-1234
+$ git start feature 1234-desc
 
 # start whateveryouwant off of a specified branch
-$ git start whatever NODE-1234 main
+$ git start whatever 1234-desc main
 ```
 
 #### git finish
@@ -50,16 +48,16 @@ branch by merging to default branch.
 Specify "push" as the last argument to auto-push merged branch(es).
 
 ```shell
-# Merge hotfix/NODE-1234 to main and develop
+# Merge hotfix/1234 to main and develop
 $ git finish
 
-# Merge feature/NODE-1234 to develop only
+# Merge feature/1234 to develop only
 $ git finish
 
 # Merge feature or hotfix and push merged branch(es) to origin
 $ git finish push
 
-# Merge whatever/NODE-1234 to main and develop (specify type is hotfix)
+# Merge whatever/1234 to main and develop (specify type is hotfix)
 $ git finish hotfix
 
 # Merge other branch and push merged branch(es) to origin
