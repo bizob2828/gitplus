@@ -120,7 +120,8 @@ $ git out
 
 #### git open
 
-Opens the current GitHub repo in your browser. No auth required because the browser does auth for you.
+Opens the current repo in your browser. No auth required because the browser does auth for you.
+**Note**: Only supports GitHub and GitLab atm
 
 ```shell
 $ git open
