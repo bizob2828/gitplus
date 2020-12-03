@@ -40,6 +40,16 @@ $ git start feature 1234-desc
 $ git start whatever 1234-desc main
 ```
 
+***Work specific***
+Naming conventions of branches are more rigid
+```shell
+# Create a branch from develop
+git start wb 123-BranchName
+
+# Create a branch from default branch
+git start wb 123-BranchName master
+```
+
 #### git finish
 
 Does a --no-ff merge to main (if hotfix) and develop. Will also work in repos that don't have a develop
