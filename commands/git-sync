@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+##
+# Usage
+#
+# Sync fork with upstream
+# $ git sync <branch>
+#
+# Sync fork with upstream and push changes
+# $ git sync <branch> push
+#
+
+# exit on error
+set -e
+source default-branch.sh
+BRANCH=$MAIN
+
+[[ $1 != '' && $1 != 'push' ]] && BRANCH=$1
+
+echo "name of branch $BRANCH"
+git checkout $BRANCH
+git fetch upstream
+git merge upstream/$BRANCH
+
+[[ $1 = 'push' || $2 = 'push' ]] && git push origin $BRANCH
