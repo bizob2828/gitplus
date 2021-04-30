@@ -8,6 +8,10 @@
 #
 # Updates with rebase rather than merge
 # $ git update rebase
+#
+#
+# Updates with rebase from a specified origin
+# $ git update rebase upstream
 ##
 # exit on error
 set -e
@@ -18,7 +22,7 @@ source default-branch.sh
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 TYPE=$1
-
+REMOTE=${2:-origin}
 
 if [[ $BRANCH = "$MAIN" ]]; then
   echo "you can't update $MAIN silly"
@@ -29,15 +33,15 @@ git fetch  # get new stuff
 
 if [[ ${BRANCH:0:8} = "feature/" || $DEVELOP_EXISTS -eq 1 ]]; then
  if [[ $TYPE = 'rebase' ]]; then
-    git rebase origin/develop
+    git rebase "$REMOTE/develop"
   else
-    git merge origin/develop
+    git merge "$REMOTE/develop"
   fi
 else
   if [[ $TYPE = 'rebase' ]]; then
-    git rebase "origin/$MAIN"
+    git rebase "$REMOTE/$MAIN"
   else
-    git merge "origin/$MAIN"
+    git merge "$REMOTE/$MAIN"
   fi
 fi
 
